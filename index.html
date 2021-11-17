@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <title>Enter Details</title>
+  </head>
+  <body>
+    <form id="form">
+      Enter Team name:
+      <input type="text" id="teamName" />
+    </form>
+  </body>
+
+  <script>
+    number = prompt("Enter number of team members:");
+    if (number == 0 || number == null) {
+      number = prompt("Enter number of team members ( Other than 0 ):");
+    } else if (number > 5) {
+      number = prompt("Enter number   of team members ( Team limit is 4! ):");
+    } else {
+      console.log(number);
+    }
+
+    var formElem = document.getElementById("form");
+    var submit = document.createElement("button");
+    submit.classList.add("Submit-Btn");
+    submit.type = "button";
+    submit.innerHTML = "SUBMIT";
+
+    for (i = 0; i < number; i++) {
+      personDetail = document.createElement("div");
+      personDetail.classList.add("person");
+
+      personDetail.appendChild(document.createTextNode("Name: "));
+      let name = document.createElement("input");
+      name.classList.add("person-name");
+      name.type = "text";
+      personDetail.appendChild(name);
+      personDetail.appendChild(document.createElement("br"));
+
+      personDetail.appendChild(document.createTextNode("Insta Id: "));
+      let insta = document.createElement("input");
+      insta.classList.add("person-id");
+      insta.type = "text";
+      personDetail.appendChild(insta);
+
+      console.log(personDetail);
+      formElem.appendChild(personDetail);
+    }
+
+    formElem.appendChild(submit);
+
+    console.log(submit);
+    submit.addEventListener("click", function () {
+      // initialse firebase and store stuff there
+      // console.log(number);
+
+      localStorage.setItem("number", number);
+      var teamName = document.getElementById("teamName");
+      localStorage.setItem("TeamName", teamName.value);
+
+      var name = document.querySelectorAll(".person-name");
+
+      // console.log(name);
+      // console.log(name.length);
+      // console.log(name[0]);
+      // console.log(name[0].value);
+      // console.log("Name:", name);
+
+      for (i = 0; i < number; i++) {
+        localStorage.setItem(`${i}`, name[i].value);
+      }
+
+      window.location.href = "./certif.html";
+    });
+  </script>
+</html>

@@ -1,0 +1,136 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scavenger Hunt</title>
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./certif_style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"
+      integrity="sha512-01CJ9/g7e8cUmY0DFTMcUw/ikS799FHiOA0eyHsUWfOetgbx/t6oV4otQ5zXKQyIrQGTHSmRVPIgrgLcZi/WMA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"
+      integrity="sha512-csNcFYJniKjJxRWRV1R7fvnXrycHP6qDR21mgz1ZP55xY5d+aHLfo9/FcGDQLfn2IfngbAHd8LdfsagcCqgTcQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body>
+    <h1>CONGRATULATIONS!</h1>
+    <h3>
+      You have completed Tech Club’s <br />
+      Scavenger hunt!
+    </h3>
+    <p>Download your badges, share it on your instagram and tag us!</p>
+    <div class="badges"></div>
+  </body>
+  <script>
+    var number = localStorage.getItem("number");
+    var name;
+    var badges = document.querySelector(".badges");
+
+    // <div person-badge>
+    //   <div person-main>Personname, personTeam </div>
+    //   <div person-btn>Button to download</div>
+    // </div>;
+    var teamName = localStorage.getItem("TeamName");
+    // var i = 0;
+    for (let i = 0; i < number; i++) {
+      // console.log(i);
+      name = localStorage.getItem(i);
+
+      var personBadge = document.createElement("div");
+      personBadge.classList.add("person-badge");
+
+      // PersonMain
+      var personMain = document.createElement("div");
+      personMain.classList.add("person-main");
+
+      var personName = document.createElement("div");
+      personName.classList.add("person-name");
+      personName.innerHTML = name;
+
+      var personTeam = document.createElement("div");
+      personTeam.classList.add("person-team");
+      personTeam.innerHTML = teamName;
+
+      personMain.appendChild(personName);
+      personMain.appendChild(personTeam);
+
+      personBadge.appendChild(personMain);
+
+      // PersonBtn
+      let personBtn = document.createElement("div");
+      personBtn.classList.add("person-btn");
+      personBtn.style.cursor = "pointer";
+
+      let btn = document.createElement("a");
+      btn.classList.add("btn");
+      btn.innerHTML = "Download Badge";
+      personBtn.appendChild(btn);
+
+      personBadge.appendChild(personBtn);
+
+      badges.appendChild(personBadge);
+      // console.log(i, btn);
+      // html2canvas(personMain, { useCORS: true, allowTaint: true }).then(
+      //   (canvas) => {
+      //     var url = canvas.toDataURL();
+      //     btn.download = "Badge.png";
+      //     btn.href = url;
+      //     console.log(i, btn);
+      //     // i = i + 1;
+      //   }
+      // );
+
+      // domToImage
+      //   .toBlob(document.getElementById("my-node"))
+      //   .then(function (blob) {
+      //     window.saveAs(blob, "my-node.png");
+      //   });
+
+      // this function is to convert blob to base64 img
+      // function saveBlobAsFile(blob, fileName) {
+      //   var reader = new FileReader();
+      //   reader.onloadend = function() {
+      //     var base64 = reader.result;
+      //     var img = document.createElement("img");
+      //     img.classList.add("me-img");
+      //     img.setAttribute("src", base64);
+      //     // insert the img to dom
+      //     document.getElementById("bar").appendChild(img);
+      //   };
+      //   reader.readAsDataURL(blob);
+      // }
+    }
+
+    // Button on click it converts to canvas and downloads
+    personbtns = document.querySelectorAll(".person-btn");
+    personbtns.forEach((personbtn) => {
+      personbtn.addEventListener("click", function () {
+        console.log("Clicked");
+
+        domtoimage.toBlob(personbtn.previousSibling).then(function (blob) {
+          window.saveAs(blob, "Badge.png");
+        });
+        // html2canvas(personbtn.previousSibling).then((canvas) => {
+        //   var url = canvas.toDataURL();
+        //   personbtn.firstChild.download = "Badge.png";
+        //   personBtn.firstChild.href = url;
+        //   console.log(personBtn.firstChild.click());
+        //   // personbtn.firstChild.click();
+        // });
+      });
+    });
+  </script>
+</html>
